@@ -7,7 +7,8 @@ function App(){
   let [modal, setModal] = useState(false);
   let [따봉, 따봉변경] = useState([0,0,0])
   let [title, setTitle] = useState(0)
-  let [글발행, 글발행변경] = useState('')
+  let [입력값, 입력값변경] = useState('')
+  let [날짜, 날짜변경] = useState(['2024-02-17', '2025-02-17', '2025-02-23'])
   
   return (
     <div className="App">
@@ -19,7 +20,7 @@ function App(){
         글제목.map(function(a, i){
           return(
             <div className="list" key={i}>
-            <h4 onClick={()=> { setModal(true); setTitle(i) }}> 
+            <h4 onClick={()=> { setModal(!modal); setTitle(i) }}> 
               { 글제목[i] } 
               <span onClick={(e)=>{
                   e.stopPropagation();
@@ -28,19 +29,54 @@ function App(){
                   따봉변경(copy)  
               }}>👍</span> {따봉[i]} 
             </h4> 
-            <p>2월 17일 발행</p>
+            <p>{ 날짜[i] } 발행</p>
+
             <button onClick={()=> {
-               글제목변경(글제목.filter((_, idx) => idx !== i))
-               }}>삭제</button>
+              let copy = [...글제목];
+              copy.splice(i, 1);
+              글제목변경(copy);
+
+              let 따봉copy = [...따봉];
+              따봉copy.splice(i, 1);
+              따봉변경(따봉copy);
+
+              let 날짜copy = [...날짜];
+              날짜copy.splice(i, 1);
+              날짜변경(날짜copy);
+
+
+            }}>삭제</button>
           </div>
           )
         })
       }
 
-      <div>
-        <input onChange={(e)=> { 글발행변경(e.target.value); console.log(글발행) }}></input>
-        <button onClick={()=> { 글제목변경(글제목.concat(글발행))}}>글발행</button>
-      </div>
+      <input
+        value={입력값} 
+        onChange={(e)=> { 입력값변경(e.target.value)}}
+      />
+
+      <button onClick={()=> { 
+        if (입력값.trim() === '') {
+          alert('내용을 입력해주세요!');
+          return;
+        }
+
+        let copy = [...글제목];
+        copy.unshift(입력값);
+        글제목변경(copy);
+        입력값변경('');
+        
+        let 따봉copy = [...따봉];
+        따봉copy.unshift(0);
+        따봉변경(따봉copy)
+
+        let 날짜copy = [...날짜];
+        let today = new Date().toISOString().split('T')[0];
+        날짜copy.unshift(today);
+        날짜변경(날짜copy)
+        
+      }}>글발행</button>
 
       {
         modal == true ? <Modal title={title} 글제목={글제목} 글제목변경={글제목변경}></Modal> : null
