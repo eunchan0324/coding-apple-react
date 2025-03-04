@@ -30,13 +30,9 @@ function App() {
       <Container>
         <Row>
             {
-              shoes.map(function(a, i){
+              shoes.map((a, i)=>{
                 return(
-                  <Col md={4} key={i}>
-                  <img src={`https://codingapple1.github.io/shop/shoes${i + 1}.jpg`} width="80%"/>
-                  <h4>{shoes[i].title}</h4>
-                  <p>{shoes[i].price}</p>
-                  </Col>
+                  <Card shoes={shoes[i]} i={i}></Card>
                 )
               })
             }
@@ -46,5 +42,16 @@ function App() {
     </>
   )
 }
+
+function Card(props) {
+  return(
+    <Col md={4} key={props.i+1}>
+      <img src={`https://codingapple1.github.io/shop/shoes${props.i + 1}.jpg`} width="80%"/>
+      <h4>{props.shoes.title}</h4>
+      <p>{props.shoes.price}</p>
+    </Col>
+  )
+}
+
 
 export default App
