@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import './App.css'
+import { useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,26 +7,23 @@ import bg from './bg.png'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import data from './data'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/detail'
 
 function App() {
 
   let [shoes, setShoes] = useState(data);
+  let navigate = useNavigate()
 
   return (
     <>
-      <Link to="/">홈</Link> | 
-      <Link to="/detail"> 상세페이지</Link>
-
 
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand onClick={()=>{ navigate('/') }}>Navbar</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/detail') }} >Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -52,11 +49,41 @@ function App() {
           </>
         } />
         <Route path='/detail' element={ <Detail /> } />
+        <Route path='/about' element={ <About /> }>
+          <Route path='member' element={ <div>맴버임</div> } />
+          <Route path='location' element={ <div>지역임</div> } />
+        </Route>
+        <Route path='/event' element={ <Event /> }>
+          <Route path='one' element={ <div>첫 주문시 양배추즙 서비스</div> } />
+          <Route path='two' element={ <div>생일기념 쿠폰받기</div> } />
+        </Route>
+        <Route path='*' element={ <div>없는 페이지입니다.</div> } />
       </Routes>
 
     </>
   )
 }
+
+function Event() {
+  return(
+    <>
+      <h1>오늘의 이벤트</h1>
+      <Outlet></Outlet>
+    </>
+  )
+}
+
+
+
+function About() {
+  return(
+    <>
+      <h4>회사정보임</h4>
+      <Outlet></Outlet>
+    </>
+  )
+}
+
 
 function Card(props) {
   return (
