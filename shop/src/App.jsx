@@ -48,11 +48,13 @@ function App() {
 
           </>
         } />
-        <Route path='/detail' element={ <Detail /> } />
+        <Route path='/detail/:id' element={ <Detail shoes={shoes} /> } />
+
         <Route path='/about' element={ <About /> }>
           <Route path='member' element={ <div>맴버임</div> } />
           <Route path='location' element={ <div>지역임</div> } />
         </Route>
+
         <Route path='/event' element={ <Event /> }>
           <Route path='one' element={ <div>첫 주문시 양배추즙 서비스</div> } />
           <Route path='two' element={ <div>생일기념 쿠폰받기</div> } />
