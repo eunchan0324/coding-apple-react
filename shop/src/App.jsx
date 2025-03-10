@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import data from './data'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/detail'
+import styled from 'styled-components'
 
 function App() {
 
