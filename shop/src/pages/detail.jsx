@@ -15,24 +15,39 @@ let YellowBtn = styled.button`
 
 function Detail(props){
 
-  useEffect(()=> {
-    setTimeout(()=>{ setAlert(false) }, 2000)
-  })
-
-
   let { id } = useParams();
   let 찾은상품 = props.shoes.find(function(x){
     return x.id == id
   });
 
-  let [alert, setAlert] = useState(true)
+  let [count, setCount] = useState(0)
+  let [alert1, setAlert] = useState(true)
+  let [num, setNum] = useState('')
 
+  useEffect(()=> {
+    let a = setTimeout(()=>{ setAlert(false) }, 2000)
+    console.log('렌더링 완료')
+    return ()=> {
+      clearTimeout(a)
+    }
+  })
+
+  useEffect(()=>{
+    if (isNaN(num) == true){
+      alert('그러지마세요')
+    }
+  }, [num])  
+  
   return (
     <div className="container">
       {
-        alert == true? <div className="alert alert-warning">2초이내 구매시 할인</div> : null
+        alert1 == true? <div className="alert alert-warning">2초이내 구매시 할인</div> : null
       }
-        
+      <button onClick={()=>{setCount(count+1)}}>증가</button>
+      <button onClick={()=>{setCount(count-1)}}>감소</button>
+      <p>{count}</p>
+      
+      <input onChange={(e)=>{setNum(e.target.value)}}/>
 
       <Box>
       <YellowBtn bg="orange">오렌지색 버튼임</YellowBtn>
