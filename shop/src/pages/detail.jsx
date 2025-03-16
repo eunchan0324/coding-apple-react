@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 
 let Box = styled.div`
   padding : 20px;
@@ -14,13 +15,25 @@ let YellowBtn = styled.button`
 
 function Detail(props){
 
+  useEffect(()=> {
+    setTimeout(()=>{ setAlert(false) }, 2000)
+  })
+
+
   let { id } = useParams();
   let 찾은상품 = props.shoes.find(function(x){
     return x.id == id
   });
 
+  let [alert, setAlert] = useState(true)
+
   return (
     <div className="container">
+      {
+        alert == true? <div className="alert alert-warning">2초이내 구매시 할인</div> : null
+      }
+        
+
       <Box>
       <YellowBtn bg="orange">오렌지색 버튼임</YellowBtn>
       <YellowBtn bg="blue">파란색 버튼임</YellowBtn>
