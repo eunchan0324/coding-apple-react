@@ -9,12 +9,14 @@ import Col from 'react-bootstrap/Col';
 import data from './data'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/detail'
-import styled from 'styled-components'
+import axios from 'axios'
+
 
 function App() {
 
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate()
+
 
   return (
     <>
@@ -46,6 +48,19 @@ function App() {
                 }
               </Row>
             </Container>
+
+            <button onClick={()=>{
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+              .then((response)=>{
+                console.log(response.data)
+                console.log(shoes)
+                let copy = [...shoes, ...response.data]
+                setShoes(copy)
+              })
+              .catch((error)=>{
+                console.error('실패함', error)
+              })
+            }}>더보기</button>
 
           </>
         } />
